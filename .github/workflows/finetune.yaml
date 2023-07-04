@@ -27,4 +27,4 @@ jobs:
         with:
           push: true
           context: .
-          tags: ${{ secrets.PROJECT_ID }}/custom-diffusion:latest
+          tags: gcr.io/${{ secrets.PROJECT_ID }}/custom-diffusion:latest
