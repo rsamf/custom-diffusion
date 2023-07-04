@@ -1,0 +1,31 @@
+name: finetune
+description: Finetune custom-diffusion model using gcloud
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup gcloud sdk
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+      
+      - name: Authorize with gcloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log into Docker with GCP credentials
+        run: gcloud auth condigure-docker
+
+      - uses: docker/build-push-action@4
+        with:
+          push: true
+          context: .
+          tags: ${{ secrets.PROJECT_ID }}/custom-diffusion:latest
