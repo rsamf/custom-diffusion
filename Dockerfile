@@ -33,9 +33,9 @@ RUN apt-get install -y git
 RUN python -m pip install --upgrade pip
 COPY environment.yaml .
 RUN git clone https://github.com/CompVis/stable-diffusion && \
-    pushd stable-diffusion && \
+    cd stable-diffusion && \
     git reset --hard 21f890f && \
-    popd
+    cd ..
 RUN conda env create -f environment.yaml
 
 # Setup env vars
