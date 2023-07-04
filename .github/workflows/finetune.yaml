@@ -1,6 +1,5 @@
 name: finetune
-description: Finetune custom-diffusion model using gcloud
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: Finetune workflow run
 on: [push]
 jobs:
   build:
