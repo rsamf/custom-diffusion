@@ -7,23 +7,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Setup gcloud sdk
-        uses: 'google-github-actions/setup-gcloud@v1'
-        with:
-          version: '>= 363.0.0'
-      
       - name: Authorize with gcloud
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
+      - name: Setup gcloud sdk
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v2
 
       - name: Log into Docker with GCP credentials
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker gcr.io
 
-      - uses: docker/build-push-action@v4
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
         with:
           push: true
           context: .
