@@ -29,3 +29,5 @@ jobs:
           push: true
           context: .
           tags: gcr.io/${{ secrets.PROJECT_ID }}/custom-diffusion:latest
+          cache-from: type=inline
+          cache-to: type=registry,ref=gcr.io/${{ secrets.PROJECT_ID }}/custom-diffusion:latest

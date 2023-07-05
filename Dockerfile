@@ -3,7 +3,7 @@ FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 RUN apt-get update
 RUN apt-get install -y wget
 
-# Install python
+# Install python and conda
 ENV CONDA_DIR /opt/conda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
     /bin/bash miniconda.sh -b -p /opt/conda && \
@@ -25,7 +25,6 @@ RUN wget -nv \
     # Remove the backup directory that gcloud creates
     rm -rf /root/tools/google-cloud-sdk/.install/.backup
 
-
 WORKDIR /opt/train
 
 # Install deps
@@ -46,7 +45,7 @@ ENV PYTORCH_CUDA_ALLOC_CONF="max_split_size_mb:512"
 
 # Code
 COPY scripts scripts
-COPY src /opt/ml/code/src
+COPY src src
 COPY train.py .
 
 ENTRYPOINT scripts/train.sh
