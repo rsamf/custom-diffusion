@@ -3,7 +3,7 @@
 ## PROJECT_ID and BUCKET_NAME should be set in secrets
 DATE=$(date +%Y%m%d_%H%M%S)
 MODEL_DIR="output/custom-diffusion-cat-$DATE"
-IMAGE_URI=gcr.io/$PROJECT_ID/custom-diffusion
+IMAGE_URI=gcr.io/$PROJECT_ID/custom-diffusion:latest
 JOB_NAME=cat_job_$DATE
 
 gcloud ai-platform jobs submit training $JOB_NAME \
