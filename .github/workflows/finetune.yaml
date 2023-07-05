@@ -13,7 +13,7 @@ jobs:
           credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
       - name: Setup gcloud sdk
-        uses: 'google-github-actions/setup-gcloud@v1'
+        uses: google-github-actions/setup-gcloud@v1
         with:
           version: '>= 363.0.0'
 
@@ -29,5 +29,23 @@ jobs:
           push: true
           context: .
           tags: gcr.io/${{ secrets.PROJECT_ID }}/custom-diffusion:latest
-          cache-from: type=inline
-          cache-to: type=registry,ref=gcr.io/${{ secrets.PROJECT_ID }}/custom-diffusion:latest
+          cache-from: type=registry,ref=gcr.io/${{ secrets.PROJECT_ID }}/custom-diffusion:latest
+          cache-to: type=inline
+
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Authorize with gcloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+      - name: Setup gcloud sdk
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: '>= 363.0.0'
+
+      - name: Submit training job
+        run: PROJECT_ID=${{ secrets.PROJECT_ID }} BUCKET_NAME=${{ secrets.BUCKET_NAME }} scripts/submit_train_job.sh

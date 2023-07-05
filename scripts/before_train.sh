@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gsutil cp -r $BUCKET/$JOB_INPUT .
+gsutil cp -r gs://$BUCKET_NAME/custom-diffusion/input .
